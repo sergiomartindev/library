@@ -1,0 +1,11 @@
+{
+  "name": "zoo",
+  "version": "1.0.0",
+  "author": "Sergio Martín",
+  "devDependencies": {
+    "vite": "^4.1.4"
+  },
+  "scripts": {
+    "dev": "vite"
+  }
+}
