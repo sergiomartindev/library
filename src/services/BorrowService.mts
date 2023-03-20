@@ -9,8 +9,6 @@ class BorrowService {
   static searchBorrowingById(borrowingId: string): IBorrowing | undefined {
     return BorrowingRepository.read(borrowingId);
   } 
-
-
 }
 
 export default BorrowService;
