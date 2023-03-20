@@ -17,7 +17,6 @@ class BooksRepository {
 
   static update(id: string, title: string, author: string, genres: Genre[]): IBook {
     const bookIndex = BooksRepository.books.findIndex(({ id: bookId}) => bookId === id);
-
     const bookToUpdate = BooksRepository.books[bookIndex];
 
     if (title) {

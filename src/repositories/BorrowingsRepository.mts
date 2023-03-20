@@ -1,5 +1,6 @@
 import IBorrowing from '../interfaces/IBorrowing.mjs';
 import BorrowingFactory from '../factories/BorrowingFactory.mjs';
+import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 
 class BorrowingRepository {
   private static borrowings: IBorrowing[] = [];
@@ -14,10 +15,15 @@ class BorrowingRepository {
     return BorrowingRepository.borrowings.find(({ id: borrowingId }) => borrowingId === id);
   }
 
-  static update(id: string, newElement: IBorrowing): IBorrowing {
+  static update(id: string, status: BorrowingStatus): IBorrowing {
     const borrowingIndex = BorrowingRepository.borrowings.findIndex(({ id: borrowingId}) => borrowingId === id);
-    BorrowingRepository.borrowings[borrowingIndex] = newElement;
-    return newElement;
+    const borrowingToUpdate = BorrowingRepository[borrowingIndex];
+
+    if (status) {
+      borrowingToUpdate.status = status;
+    }
+
+    return borrowingToUpdate;
   };
 
   static delete(id: string): IBorrowing[] {

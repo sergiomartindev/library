@@ -1,5 +1,6 @@
 import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 import IBorrowing from '../interfaces/IBorrowing.mjs';
+import Crypto from '../variations/Crypto.mjs';
 
 class Borrowing implements IBorrowing{
   private _id: string;
@@ -9,7 +10,7 @@ class Borrowing implements IBorrowing{
   private _status: BorrowingStatus;
 
   constructor(bookId: string, userId: string, borrowDate: Date) {
-    this._id = crypto.randomUUID();
+    this._id = Crypto.getUUID();
     this._bookId = bookId;
     this._userId = userId;
     this._borrowDate = borrowDate;
@@ -33,6 +34,10 @@ class Borrowing implements IBorrowing{
 
   get status(): BorrowingStatus {
     return this._status;
+  }
+
+  set status(status) {
+    this._status = status;
   }
 
 }
