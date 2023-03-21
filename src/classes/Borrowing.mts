@@ -10,10 +10,8 @@ class Borrowing implements IBorrowing{
   private _borrowDate: Date;
   private _status: BorrowingStatus;
 
-  constructor(bookId: string, userId: string, borrowDate: Date) {
-    const crypto: IEncrypter = new Crypto();
-
-    this._id = crypto.getUUID();
+  constructor(id: string, bookId: string, userId: string, borrowDate: Date) {
+    this._id = id;
     this._bookId = bookId;
     this._userId = userId;
     this._borrowDate = borrowDate;

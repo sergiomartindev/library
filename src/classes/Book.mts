@@ -11,14 +11,11 @@ class Book implements IBook {
   private _author: string;
   private _genres: Genre[];
 
-  constructor(title: string, author: string, genres: Genre[]) {
-    const crypto: IEncrypter = new Crypto();
-    const cloner: ICloner = new Cloner();
-    
-    this._id = crypto.getUUID();
+  constructor(id: string, title: string, author: string, genres: Genre[]) {
+    this._id = id;
     this._title = title;
     this._author = author;
-    this._genres = cloner.getDeepClone(genres);
+    this._genres = genres;
   }
 
   get id(): string {
