@@ -1,7 +1,6 @@
-import IBorrowing from "../interfaces/IBorrowing.mjs";
-import BorrowingRepository from "../repositories/BorrowingsRepository.mjs";
-import BorrowingStatus from "../enums/BorrowingStatus.mjs";
-import IRepository from "../interfaces/IRepository.mjs";
+import IBorrowing from '../interfaces/IBorrowing.mjs';
+import BorrowingStatus from '../enums/BorrowingStatus.mjs';
+import IRepository from '../interfaces/IRepository.mjs';
 
 class BorrowService {
   private repository: IRepository<IBorrowing>;
@@ -14,12 +13,16 @@ class BorrowService {
     return this.repository.create(bookId, userId);
   }
 
-  searchBorrowingById(borrowingId: string): IBorrowing | undefined {
+  readBorrowingById(borrowingId: string): IBorrowing | undefined {
     return this.repository.read(borrowingId);
-  } 
+  }
 
   updateBorrowing(borrowingId: string, status: BorrowingStatus): IBorrowing {
     return this.repository.update(borrowingId, status);
+  }
+
+  deleteBorrowingById(borrowingId: string): IBorrowing[] {
+    return this.repository.delete(borrowingId);
   }
 }
 

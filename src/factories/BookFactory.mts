@@ -1,4 +1,4 @@
-import Book from '../classes/Book.mjs'
+import Book from '../classes/Book.mjs';
 import Genre from '../enums/Genre.mjs';
 import Crypto from '../variations/Crypto.mjs';
 

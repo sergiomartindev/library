@@ -10,18 +10,22 @@ class BorrowingRepository implements IRepository<IBorrowing> {
     const newBorrowing: IBorrowing = BorrowingFactory.create(bookId, userId);
     this.borrowings.push(newBorrowing);
     return newBorrowing;
-  }    
+  }
 
   read(id: string): IBorrowing | undefined {
     return this.borrowings.find(({ id: borrowingId }) => borrowingId === id);
   }
 
-  readByFilterCriteria(filterFunction: (borrowing: IBorrowing) => {}): IBorrowing[] {
+  readByFilterCriteria(
+    filterFunction: (borrowing: IBorrowing) => {}
+  ): IBorrowing[] {
     return this.borrowings.filter(filterFunction);
   }
 
   update(id: string, status: BorrowingStatus): IBorrowing {
-    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId}) => borrowingId === id);
+    const borrowingIndex = this.borrowings.findIndex(
+      ({ id: borrowingId }) => borrowingId === id
+    );
     const borrowingToUpdate = BorrowingRepository[borrowingIndex];
 
     if (status) {
@@ -29,13 +33,15 @@ class BorrowingRepository implements IRepository<IBorrowing> {
     }
 
     return borrowingToUpdate;
-  };
+  }
 
   delete(id: string): IBorrowing[] {
-    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId}) => borrowingId === id);
+    const borrowingIndex = this.borrowings.findIndex(
+      ({ id: borrowingId }) => borrowingId === id
+    );
     this.borrowings.splice(borrowingIndex, 1);
     return this.borrowings;
-  };
+  }
 }
 
 export default BorrowingRepository;

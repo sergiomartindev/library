@@ -1,4 +1,4 @@
-import Genre from "../enums/Genre.mjs";
+import Genre from '../enums/Genre.mjs';
 
 interface IBook {
   id: string;

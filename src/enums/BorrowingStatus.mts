@@ -1,5 +1,5 @@
 enum BorrowingStatus {
-  Active, 
+  Active,
   Delayed,
   Settled,
 }

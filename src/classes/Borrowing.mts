@@ -1,9 +1,7 @@
 import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 import IBorrowing from '../interfaces/IBorrowing.mjs';
-import Crypto from '../variations/Crypto.mjs';
-import IEncrypter from '../interfaces/IEncrypter.mjs';
 
-class Borrowing implements IBorrowing{
+class Borrowing implements IBorrowing {
   private _id: string;
   private _bookId: string;
   private _userId: string;
@@ -40,7 +38,6 @@ class Borrowing implements IBorrowing{
   set status(status) {
     this._status = status;
   }
-
 }
 
 export default Borrowing;

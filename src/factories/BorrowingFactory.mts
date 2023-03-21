@@ -1,4 +1,4 @@
-import Borrowing from "../classes/Borrowing.mjs";
+import Borrowing from '../classes/Borrowing.mjs';
 import Crypto from '../variations/Crypto.mjs';
 
 class BorrowingFactory {

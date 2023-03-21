@@ -1,9 +1,5 @@
-import IBook from "../interfaces/IBook.mjs";
-import Genre from "../enums/Genre.mjs";
-import Crypto from "../variations/Crypto.mjs";
-import Cloner from "../variations/Cloner.mjs";
-import IEncrypter from '../interfaces/IEncrypter.mjs';
-import ICloner from "../interfaces/ICloner.mjs";
+import IBook from '../interfaces/IBook.mjs';
+import Genre from '../enums/Genre.mjs';
 
 class Book implements IBook {
   private _id: string;

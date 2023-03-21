@@ -1,4 +1,4 @@
-class User  {
+class User {
   private _email: string;
   private _name: string;
 

@@ -1,4 +1,4 @@
-import BorrowingStatus from "../enums/BorrowingStatus.mjs";
+import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 
 interface IBorrowing {
   id: string;
