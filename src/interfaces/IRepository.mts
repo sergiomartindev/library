@@ -1,8 +1,9 @@
 interface IRepository<T> {
   create(...args: any[]): T;
-  read(id: string): T | undefined;
+  read(): T[];
   update(...args: any[]): T;
   delete(id: string): T[];
+  readByFindCriteria(findFunction: (el: T) => {}): T | undefined;
   readByFilterCriteria(filterFunction: (el: T) => {}): T[];
 }
 

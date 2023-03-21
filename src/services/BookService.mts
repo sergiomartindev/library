@@ -13,8 +13,13 @@ class BooksService {
     return this.repository.create(title, author, genres);
   }
 
+  readBooks(): IBook[] {
+    return this.repository.read();
+  }
+
   readBookById(id: string): IBook | undefined {
-    return this.repository.read(id);
+    const findFunction = ({ id: bookId }): boolean => bookId === id;
+    return this.repository.readByFindCriteria(findFunction);
   }
 
   readBooksByTitle(title: string): IBook[] {

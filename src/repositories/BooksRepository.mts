@@ -14,8 +14,12 @@ class BooksRepository implements IRepository<IBook> {
     return newBook;
   }
 
-  read(id: string): IBook | undefined {
-    return this.books.find(({ id: bookId }) => bookId === id);
+  read(): IBook[] {
+    return this.books;
+  }
+
+  readByFindCriteria(findFunction: (book: IBook) => {}): IBook | undefined {
+    return this.books.find(findFunction);
   }
 
   readByFilterCriteria(filterFunction: (book: IBook) => {}): IBook[] {

@@ -12,8 +12,14 @@ class BorrowingRepository implements IRepository<IBorrowing> {
     return newBorrowing;
   }
 
-  read(id: string): IBorrowing | undefined {
-    return this.borrowings.find(({ id: borrowingId }) => borrowingId === id);
+  read(): IBorrowing[] {
+    return this.borrowings;
+  }
+
+  readByFindCriteria(
+    findFunction: (borrowing: IBorrowing) => {}
+  ): IBorrowing | undefined {
+    return this.borrowings.find(findFunction);
   }
 
   readByFilterCriteria(
