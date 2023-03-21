@@ -1,23 +1,30 @@
 import IBook from '../interfaces/IBook.mjs'
 import BookFactory from '../factories/BookFactory.mjs';
 import Genre from '../enums/Genre.mjs';
+import IRepository from '../interfaces/IRepository.mjs';
 
-class BooksRepository {
-  private static books: IBook[] = [];
+class BooksRepository implements IRepository<IBook> {
+  private books: IBook[] = [];
 
-  static create(title: string, author: string, genres: Genre[]): IBook {
+  constructor() {}
+
+  create(title: string, author: string, genres: Genre[]): IBook {
     const newBook: IBook = BookFactory.create(title, author, genres);
-    BooksRepository.books.push(newBook);
+    this.books.push(newBook);
     return newBook;
   }
 
-  static read(id: string): IBook | undefined {
-    return BooksRepository.books.find(({ id: bookId }) => bookId === id);
+  read(id: string): IBook | undefined {
+    return this.books.find(({ id: bookId }) => bookId === id);
   }
 
-  static update(id: string, title: string, author: string, genres: Genre[]): IBook {
-    const bookIndex = BooksRepository.books.findIndex(({ id: bookId}) => bookId === id);
-    const bookToUpdate = BooksRepository.books[bookIndex];
+  readByFilterCriteria(filterFunction: (book: IBook) => {}): IBook[] {
+    return this.books.filter(filterFunction);
+  }
+
+  update(id: string, title: string, author: string, genres: Genre[]): IBook {
+    const bookIndex = this.books.findIndex(({ id: bookId}) => bookId === id);
+    const bookToUpdate = this.books[bookIndex];
 
     if (title) {
       bookToUpdate.title = title;
@@ -34,15 +41,11 @@ class BooksRepository {
     return bookToUpdate;
   };
 
-  static delete(id: string): IBook[] {
-    const bookIndex = BooksRepository.books.findIndex(({ id: bookId}) => bookId === id);
-    BooksRepository.books.splice(bookIndex, 1);
-    return BooksRepository.books;
+  delete(id: string): IBook[] {
+    const bookIndex = this.books.findIndex(({ id: bookId}) => bookId === id);
+    this.books.splice(bookIndex, 1);
+    return this.books;
   };
-
-  static readByFilterCriteria(filterFunction: (IBook) => {}): IBook[] {
-    return BooksRepository.books.filter(filterFunction);
-  }
 }
 
 export default BooksRepository;

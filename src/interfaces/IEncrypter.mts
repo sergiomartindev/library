@@ -1,5 +1,5 @@
 interface IEncrypter {
-  // static getUUID(): string
+  getUUID(): string
 }
 
 export default IEncrypter;

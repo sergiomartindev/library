@@ -2,6 +2,8 @@ import IBook from "../interfaces/IBook.mjs";
 import Genre from "../enums/Genre.mjs";
 import Crypto from "../variations/Crypto.mjs";
 import Cloner from "../variations/Cloner.mjs";
+import IEncrypter from '../interfaces/IEncrypter.mjs';
+import ICloner from "../interfaces/ICloner.mjs";
 
 class Book implements IBook {
   private _id: string;
@@ -10,10 +12,13 @@ class Book implements IBook {
   private _genres: Genre[];
 
   constructor(title: string, author: string, genres: Genre[]) {
-    this._id = Crypto.getUUID();
+    const crypto: IEncrypter = new Crypto();
+    const cloner: ICloner = new Cloner();
+    
+    this._id = crypto.getUUID();
     this._title = title;
     this._author = author;
-    this._genres = Cloner.getDeepClone(genres);
+    this._genres = cloner.getDeepClone(genres);
   }
 
   get id(): string {

@@ -1,7 +1,9 @@
 import IEncrypter from '../interfaces/IEncrypter.mjs';
 
 class Crypto implements IEncrypter {
-  static getUUID(): string {
+  constructor() {}
+  
+  getUUID(): string {
     return crypto.randomUUID();
   }
 }

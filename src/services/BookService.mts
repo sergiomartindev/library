@@ -1,33 +1,39 @@
 import Genre from '../enums/Genre.mjs';
 import IBook from '../interfaces/IBook.mjs';
-import BooksRepository from '../repositories/BooksRepository.mjs';
+import IRepository from '../interfaces/IRepository.mjs';
 
 class BookService {
-  static createBook(title: string, author: string, genres: Genre[]) {
-    return BooksRepository.create(title, author, genres);
+  private repository: IRepository<IBook>;
+
+  constructor(repository: IRepository<IBook>) {
+    this.repository = repository;
   }
 
-  static searchBookById(id: string): IBook | undefined {
-    return BooksRepository.read(id);
+  createBook(title: string, author: string, genres: Genre[]) {
+    return this.repository.create(title, author, genres);
   }
 
-  static searchBooksByTitle(title: string): IBook[] {
+  searchBookById(id: string): IBook | undefined {
+    return this.repository.read(id);
+  }
+
+  searchBooksByTitle(title: string): IBook[] {
     const filterFunction = ({ title: bookTitle }): boolean => bookTitle.includes(title);
-    return BooksRepository.readByFilterCriteria(filterFunction);
+    return this.repository.readByFilterCriteria(filterFunction);
   }
 
-  static searchBooksByGenre(genre: Genre): IBook[] {
+  searchBooksByGenre(genre: Genre): IBook[] {
     const filterFunction = ({ genres: bookGenres }): boolean => bookGenres.some(bookGenre => bookGenre === genre);
-    return BooksRepository.readByFilterCriteria(filterFunction);
+    return this.repository.readByFilterCriteria(filterFunction);
   }
 
-  static searchBooksByAuthor(author: string): IBook[] {
+  searchBooksByAuthor(author: string): IBook[] {
     const filterFunction = ({ author: bookAuthor}): boolean => bookAuthor.includes(author);
-    return BooksRepository.readByFilterCriteria(filterFunction);
+    return this.repository.readByFilterCriteria(filterFunction);
   }
 
-  static updateBook(id: string, title: string, author: string, genres: Genre[]): IBook {
-    return BooksRepository.update(id, title, author, genres);
+  updateBook(id: string, title: string, author: string, genres: Genre[]): IBook {
+    return this.repository.update(id, title, author, genres);
   }
 }
 

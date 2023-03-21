@@ -1,8 +1,9 @@
 interface IRepository<T> {
-  // static create(): T;
-  // static read(): T | undefined;
-  // static update(): T;
-  // static delete(): T;
+  create(...args: any[]): T;
+  read(id: string): T | undefined;
+  update(...args: any[]): T;
+  delete(id: string): T[];
+  readByFilterCriteria(filterFunction: (el: T) => {}): T[]
 }
 
 export default IRepository;

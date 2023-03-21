@@ -1,6 +1,7 @@
 import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 import IBorrowing from '../interfaces/IBorrowing.mjs';
 import Crypto from '../variations/Crypto.mjs';
+import IEncrypter from '../interfaces/IEncrypter.mjs';
 
 class Borrowing implements IBorrowing{
   private _id: string;
@@ -10,7 +11,9 @@ class Borrowing implements IBorrowing{
   private _status: BorrowingStatus;
 
   constructor(bookId: string, userId: string, borrowDate: Date) {
-    this._id = Crypto.getUUID();
+    const crypto: IEncrypter = new Crypto();
+
+    this._id = crypto.getUUID();
     this._bookId = bookId;
     this._userId = userId;
     this._borrowDate = borrowDate;
