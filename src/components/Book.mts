@@ -1,6 +1,7 @@
 import IBook from '../interfaces/IBook.mjs';
+import IComponent from '../interfaces/IComponent.mjs';
 
-class Book {
+class Book implements IComponent {
   private book: IBook;
 
   constructor(book: IBook) {
