@@ -4,7 +4,10 @@ import Genre from '../enums/Genre.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
 
 class BooksRepository implements IRepository<IBook> {
-  private books: IBook[] = [];
+  private books: IBook[] = [
+    BookFactory.create('Harry Potter', 'J. K. Rowling', [0, 1]),
+    BookFactory.create('Moby Dick', 'Herman Melville', [3]),
+  ];
 
   constructor() {}
 

@@ -2,9 +2,11 @@ import Book from '../components/Book.mjs';
 import BooksService from '../services/BookService.mjs';
 import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
+import ElementLibrary from '../enums/ElementLibrary.mjs';
+import IController from '../interfaces/IController.mjs';
 
-class LibraryController {
-  private HTMLElements: Map<string, HTMLElement | null> = new Map();
+class LibraryController implements IController {
+  public HTMLElements: Map<string, HTMLElement | null> = new Map();
   private booksService: BooksService;
 
   constructor(booksService: BooksService) {
@@ -13,20 +15,32 @@ class LibraryController {
     this.fillBookGrid(this.booksService.readBooks());
   }
 
-  private initializeHTMLElements(): void {
-    this.HTMLElements.set(
-      'library__book-grid',
-      document.getElementById('library__book-grid')
-    );
+  public initializeHTMLElements(): void {
+    const elementsIds: ElementLibrary[] = [ElementLibrary.BookGrid];
+
+    elementsIds.forEach((elementId: ElementLibrary) => {
+      this.HTMLElements.set(elementId, document.getElementById(elementId));
+    });
   }
 
-  private fillBookGrid(books: IBook[]): void {
-    books.forEach((book) => {
-      const bookComponent: IComponent = new Book(book);
-      this.HTMLElements.get('library__book-grid')?.appendChild(
-        bookComponent.getHTML()
+  public fillBookGrid(books: IBook[]): void {
+    const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid) as
+      | HTMLElement
+      | undefined;
+
+    if (bookGridElement) {
+      bookGridElement.innerHTML = '';
+      books.forEach((book) => {
+        const bookComponent: IComponent = new Book(book);
+        this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
+          bookComponent.getHTML()
+        );
+      });
+    } else {
+      console.error(
+        `The element with ID '${ElementLibrary.BookGrid}' was not found in the DOM or is not an HTMLElement.`
       );
-    });
+    }
   }
 }
 
