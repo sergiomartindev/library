@@ -1,6 +1,7 @@
 :root {
   --main-color: #005221;
   --main-color--dark: #003a17;
+  --gray--light: #cccccc;
 
   --p-xs: 5px;
   --p-md: 10px;
