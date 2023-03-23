@@ -21,7 +21,6 @@ class SearchBarController implements IController {
   private initializeHTMLElements(): void {
     const elementsIds: ElementSearchBar[] = [
       ElementSearchBar.SearchForm,
-      ElementSearchBar.SearchButton,
       ElementSearchBar.SearchTitleInput,
     ];
 
@@ -37,12 +36,15 @@ class SearchBarController implements IController {
   private initializeSearchFormEventListeners(): void {
     this.HTMLElements.get(ElementSearchBar.SearchForm)?.addEventListener(
       'submit',
-      this.handleSearchFormSubmit.bind(this)
+      (e) => e.preventDefault()
+    );
+    this.HTMLElements.get(ElementSearchBar.SearchTitleInput)?.addEventListener(
+      'input',
+      this.handleSearchTitleInput.bind(this)
     );
   }
 
-  private handleSearchFormSubmit(event: Event) {
-    event.preventDefault();
+  private handleSearchTitleInput() {
     const formElement: HTMLFormElement = this.HTMLElements.get(
       ElementSearchBar.SearchForm
     ) as HTMLFormElement;
