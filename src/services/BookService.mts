@@ -17,27 +17,27 @@ class BooksService {
     return this.repository.read();
   }
 
-  readBookById(id: string): IBook | undefined {
+  readBookById(id: string): IBook[] | undefined {
     const findFunction = ({ id: bookId }): boolean => bookId === id;
-    return this.repository.readByFindCriteria(findFunction);
+    return this.repository.read(findFunction);
   }
 
   readBooksByTitle(title: string): IBook[] {
     const filterFunction = ({ title: bookTitle }): boolean =>
       bookTitle.includes(title);
-    return this.repository.readByFilterCriteria(filterFunction);
+    return this.repository.read(filterFunction);
   }
 
   readBooksByGenre(genre: Genre): IBook[] {
     const filterFunction = ({ genres: bookGenres }): boolean =>
       bookGenres.some((bookGenre) => bookGenre === genre);
-    return this.repository.readByFilterCriteria(filterFunction);
+    return this.repository.read(filterFunction);
   }
 
   readBooksByAuthor(author: string): IBook[] {
     const filterFunction = ({ author: bookAuthor }): boolean =>
       bookAuthor.includes(author);
-    return this.repository.readByFilterCriteria(filterFunction);
+    return this.repository.read(filterFunction);
   }
 
   updateBook(

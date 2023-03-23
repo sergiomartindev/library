@@ -1,0 +1,20 @@
+#navbar {
+  background-color: red;
+}
+
+#navbar__title {
+  color: #fff;
+}
+
+#navbar__actions {
+  list-style: none;
+  display: flex;
+}
+
+.navbar__action {
+  background-color: green;
+}
+
+.navbar__action-label {
+  color: yellow;
+}

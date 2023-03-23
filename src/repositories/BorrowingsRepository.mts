@@ -12,20 +12,11 @@ class BorrowingRepository implements IRepository<IBorrowing> {
     return newBorrowing;
   }
 
-  read(): IBorrowing[] {
+  read(filterFunction?: (borrowing: IBorrowing) => {}): IBorrowing[] {
+    if (filterFunction) {
+      return this.borrowings.filter(filterFunction);
+    }
     return this.borrowings;
-  }
-
-  readByFindCriteria(
-    findFunction: (borrowing: IBorrowing) => {}
-  ): IBorrowing | undefined {
-    return this.borrowings.find(findFunction);
-  }
-
-  readByFilterCriteria(
-    filterFunction: (borrowing: IBorrowing) => {}
-  ): IBorrowing[] {
-    return this.borrowings.filter(filterFunction);
   }
 
   update(id: string, status: BorrowingStatus): IBorrowing {

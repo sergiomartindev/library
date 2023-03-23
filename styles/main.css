@@ -1,54 +1,5 @@
-.library {
-  /* styles for the library container */
-}
-
-.library__title {
-  /* styles for the library title */
-}
-
-.library__search {
-  /* styles for the search container */
-}
-
-.library__search-input {
-  /* styles for the search input */
-}
-
-.library__search-button {
-  /* styles for the search button */
-}
-
-.library__book-grid {
-  /* styles for the book grid container */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.book {
-  /* styles for individual book containers */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.book__cover {
-  /* styles for book cover images */
-  max-width: 100%;
-  height: auto;
-}
-
-.book__title {
-  /* styles for book titles */
-}
-
-.book__author {
-  /* styles for book authors */
-}
-
-.book__description {
-  /* styles for */
-}
+@import url('global.css');
+@import url('layout.css');
+@import url('navbar.css');
+@import url('searchbar.css');
+@import url('books-grid.css');

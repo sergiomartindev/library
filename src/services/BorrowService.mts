@@ -13,16 +13,16 @@ class BorrowService {
     return this.repository.create(bookId, userId);
   }
 
-  readBorrowingById(borrowingId: string): IBorrowing | undefined {
-    return this.repository.read(borrowingId);
+  readBorrowingById(id: string): IBorrowing[] {
+    return this.repository.read(({ id: borrowingId }) => borrowingId === id);
   }
 
-  updateBorrowing(borrowingId: string, status: BorrowingStatus): IBorrowing {
-    return this.repository.update(borrowingId, status);
+  updateBorrowing(id: string, status: BorrowingStatus): IBorrowing {
+    return this.repository.update(id, status);
   }
 
-  deleteBorrowingById(borrowingId: string): IBorrowing[] {
-    return this.repository.delete(borrowingId);
+  deleteBorrowingById(id: string): IBorrowing[] {
+    return this.repository.delete(id);
   }
 }
 

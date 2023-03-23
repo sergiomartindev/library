@@ -17,8 +17,18 @@
     />
   </head>
   <body>
-    <div class="library">
-      <h1 class="library__title">My Library</h1>
+    <div id="layout">
+      <nav id="navbar">
+        <span id="navbar__title">My Library</span>
+        <ul id="navbar__actions">
+          <li class="navbar__action">
+            <span class="navbar__action-label">Add Book</span>
+          </li>
+          <li class="navbar__action">
+            <span class="navbar__action-label">Borrow Book</span>
+          </li>
+        </ul>
+      </nav>
       <!-- Search Form -->
       <div class="library__search">
         <form id="library-search-form">
@@ -40,10 +50,10 @@
         </form>
       </div>
       <!-- Library Grid -->
-      <div
+      <section
         class="library__book-grid"
         id="library__book-grid"
-      ></div>
+      ></section>
     </div>
     <script
       type="module"

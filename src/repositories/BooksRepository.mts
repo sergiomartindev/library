@@ -11,25 +11,25 @@ class BooksRepository implements IRepository<IBook> {
 
   constructor() {}
 
-  create(title: string, author: string, genres: Genre[]): IBook {
+  public create(title: string, author: string, genres: Genre[]): IBook {
     const newBook: IBook = BookFactory.create(title, author, genres);
     this.books.push(newBook);
     return newBook;
   }
 
-  read(): IBook[] {
+  public read(filterFunction?: (book: IBook) => {}): IBook[] {
+    if (filterFunction) {
+      return this.books.filter(filterFunction);
+    }
     return this.books;
   }
 
-  readByFindCriteria(findFunction: (book: IBook) => {}): IBook | undefined {
-    return this.books.find(findFunction);
-  }
-
-  readByFilterCriteria(filterFunction: (book: IBook) => {}): IBook[] {
-    return this.books.filter(filterFunction);
-  }
-
-  update(id: string, title: string, author: string, genres: Genre[]): IBook {
+  public update(
+    id: string,
+    title: string,
+    author: string,
+    genres: Genre[]
+  ): IBook {
     const bookIndex = this.books.findIndex(({ id: bookId }) => bookId === id);
     const bookToUpdate = this.books[bookIndex];
 
@@ -48,7 +48,7 @@ class BooksRepository implements IRepository<IBook> {
     return bookToUpdate;
   }
 
-  delete(id: string): IBook[] {
+  public delete(id: string): IBook[] {
     const bookIndex = this.books.findIndex(({ id: bookId }) => bookId === id);
     this.books.splice(bookIndex, 1);
     return this.books;
