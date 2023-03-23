@@ -15,43 +15,60 @@
       rel="stylesheet"
       href="styles/main.css"
     />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="layout">
+      <!-- Navbar -->
       <nav id="navbar">
         <span id="navbar__title">My Library</span>
-        <ul id="navbar__actions">
-          <li class="navbar__action">
-            <span class="navbar__action-label">Add Book</span>
+        <ul id="navbar__links">
+          <li class="navbar__link">
+            <span class="navbar__link-label">Books</span>
           </li>
-          <li class="navbar__action">
-            <span class="navbar__action-label">Borrow Book</span>
+          <li class="navbar__link">
+            <span class="navbar__link-label">Borrowings</span>
           </li>
         </ul>
       </nav>
+
       <!-- Search Form -->
-      <div class="library__search">
-        <form id="library-search-form">
-          <input
-            type="text"
-            class="library__search-input"
-            id="library-search-form-title-input"
-            form="library-search-form"
-            name="library-search-form-title-input"
-            placeholder="Search by title"
-          />
-          <button
-            class="library__search-button"
-            id="library-search-form-submit-button"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
-      </div>
+      <form
+        class="search-bar__form"
+        id="library-search-form"
+      >
+        <input
+          type="text"
+          class="search-bar__input"
+          id="library-search-form-title-input"
+          form="library-search-form"
+          name="library-search-form-title-input"
+          placeholder="Search by title"
+        />
+        <button
+          class="search-bar__submit-button"
+          id="library-search-form-submit-button"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
+
       <!-- Library Grid -->
       <section
-        class="library__book-grid"
+        class="books-grid__grid"
         id="library__book-grid"
       ></section>
     </div>

@@ -1,0 +1,11 @@
+.search-bar__form {
+  background-color: bisque;
+}
+
+.search-bar__input {
+  background-color: blueviolet;
+}
+
+.search-bar__submit-button {
+  background-color: aquamarine;
+}

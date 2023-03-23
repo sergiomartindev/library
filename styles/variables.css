@@ -1,0 +1,12 @@
+:root {
+  --main-color: #005221;
+  --main-color--dark: #003a17;
+
+  --p-xs: 5px;
+  --p-md: 10px;
+  --p-xl: 20px;
+
+  --m-xs: 5px;
+  --m-md: 10px;
+  --m-xl: 20px;
+}

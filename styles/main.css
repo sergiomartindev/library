@@ -1,5 +1,7 @@
+@import url('variables.css');
 @import url('global.css');
 @import url('layout.css');
 @import url('navbar.css');
-@import url('searchbar.css');
+@import url('search-bar.css');
 @import url('books-grid.css');
+@import url('book.css');
