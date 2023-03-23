@@ -1,5 +1,5 @@
 .books-grid__grid {
-  /* styles for the book grid container */
+  padding: var(--p-xl);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;

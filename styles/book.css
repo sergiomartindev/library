@@ -1,27 +1,12 @@
 .book {
-  /* styles for individual book containers */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #ccc;
+  gap: var(--p-md);
+  padding: var(--p-md);
+  border: 1px solid var(--gray--light);
   border-radius: 5px;
 }
 
-.book__cover {
-  /* styles for book cover images */
-  max-width: 100%;
-  height: auto;
-}
-
 .book__title {
-  /* styles for book titles */
-}
-
-.book__author {
-  /* styles for book authors */
-}
-
-.book__description {
-  /* styles for */
+  font-weight: bold;
 }
