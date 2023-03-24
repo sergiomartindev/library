@@ -4,7 +4,7 @@ class Crypto implements IEncrypter {
   constructor() {}
 
   getUUID(): string {
-    return crypto.randomUUID();
+    return window.crypto.randomUUID();
   }
 }
 

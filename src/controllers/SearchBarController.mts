@@ -51,7 +51,7 @@ class SearchBarController implements IController {
     const formData = new FormData(formElement);
     const searchTitleInputValue =
       formData.get(ElementSearchBar.SearchTitleInput) ?? '';
-    this.libraryController.fillBookGrid(
+    this.libraryController.fillBooksGrid(
       this.booksService.readBooksByTitle(searchTitleInputValue as string)
     );
   }

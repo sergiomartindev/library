@@ -1,6 +1,3 @@
-interface IController {
-  // HTMLElements: Map<string, HTMLElement | null>;
-  // initializeHTMLElements(): void;
-}
+interface IController {}
 
 export default IController;

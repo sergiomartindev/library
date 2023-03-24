@@ -12,7 +12,7 @@ class LibraryController implements IController {
   constructor(booksService: BooksService) {
     this.booksService = booksService;
     this.initializeHTMLElements();
-    this.fillBookGrid(this.booksService.readBooks());
+    this.fillBooksGrid(this.booksService.readBooks());
   }
 
   public initializeHTMLElements(): void {
@@ -23,7 +23,7 @@ class LibraryController implements IController {
     });
   }
 
-  public fillBookGrid(books: IBook[]): void {
+  public fillBooksGrid(books: IBook[]): void {
     const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid) as
       | HTMLElement
       | undefined;

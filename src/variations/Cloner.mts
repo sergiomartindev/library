@@ -4,7 +4,7 @@ class Cloner implements ICloner {
   constructor() {}
 
   getDeepClone<T>(object: T): T {
-    return structuredClone(object);
+    return window.structuredClone(object);
   }
 }
 
