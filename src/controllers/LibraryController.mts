@@ -31,9 +31,18 @@ class LibraryController implements IController {
     if (bookGridElement) {
       bookGridElement.innerHTML = '';
       books.forEach((book) => {
-        const bookComponent: IComponent = new Book(book);
+        const bookActions: Map<string, (...args: any[]) => {}> = new Map();
+        bookActions.set(
+          'delete-book',
+          function (bookId: string) {
+            this.booksService.deleteBook(bookId);
+            this.fillBooksGrid(this.booksService.readBooks());
+          }.bind(this)
+        );
+        // TODO: Mover a factory class
+        const bookComponent: IComponent = new Book(book, bookActions);
         this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
-          bookComponent.getHTML()
+          bookComponent.getElement()
         );
       });
     } else {

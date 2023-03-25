@@ -1,5 +1,5 @@
 interface IComponent {
-  getHTML(): HTMLElement;
+  getElement(): HTMLElement;
 }
 
 export default IComponent;
