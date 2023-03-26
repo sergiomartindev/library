@@ -2,14 +2,14 @@ import IBorrowing from '../interfaces/IBorrowing.mjs';
 import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
 
-class BorrowService {
+class BorrowingService {
   private repository: IRepository<IBorrowing>;
 
   constructor(repository: IRepository<IBorrowing>) {
     this.repository = repository;
   }
 
-  createBorrow(bookId: string, userId: string): IBorrowing {
+  createBorrowing(bookId: string, userId: string): IBorrowing {
     return this.repository.create(bookId, userId);
   }
 
@@ -26,4 +26,4 @@ class BorrowService {
   }
 }
 
-export default BorrowService;
+export default BorrowingService;

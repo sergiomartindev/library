@@ -1,5 +1,6 @@
 import Book from '../components/Book.mjs';
 import BooksService from '../services/BookService.mjs';
+import BorrowingService from '../services/BorrowService.mjs';
 import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
 import ElementLibrary from '../enums/ElementLibrary.mjs';
@@ -10,9 +11,11 @@ class LibraryController implements IController {
   // Readonly so I prevent them from being accidentally modified after initialization
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
   private readonly booksService: BooksService;
+  private readonly borrowingService: BorrowingService;
 
-  constructor(booksService: BooksService) {
+  constructor(booksService: BooksService, borrowingService: BorrowingService) {
     this.booksService = booksService;
+    this.borrowingService = borrowingService;
     this.initializeHTMLElements();
     this.fillBooksGrid(this.booksService.readBooks());
   }
@@ -53,6 +56,7 @@ class LibraryController implements IController {
   }
 
   private handleBorrowBook(book: IBook) {
+    const borrowing = this.borrowingService.createBorrowing(book.id, 'me');
     debugger;
   }
 }
