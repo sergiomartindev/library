@@ -1,11 +1,12 @@
 import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
+import BookEvent from '../enums/BookEvent.mjs';
 
 class Book implements IComponent {
   private book: IBook;
-  private actions: Map<string, (...args: any[]) => {}>;
+  private actions: Map<BookEvent, (...args: any[]) => {}>;
 
-  constructor(book: IBook, actions: Map<string, (...args: any[]) => {}>) {
+  constructor(book: IBook, actions: Map<BookEvent, (...args: any[]) => {}>) {
     this.book = book;
     this.actions = actions;
   }
@@ -37,16 +38,18 @@ class Book implements IComponent {
   private getActionsElement(): HTMLElement {
     const bookActionsElement: HTMLElement = document.createElement('div');
     bookActionsElement.classList.add('book__actions');
-    bookActionsElement.appendChild(this.getActionElement());
+    for (const action of this.actions.keys()) {
+      bookActionsElement.appendChild(this.getActionElement(action));
+    }
     return bookActionsElement;
   }
 
-  private getActionElement(): HTMLElement {
+  private getActionElement(action: BookEvent): HTMLElement {
     const bookActionElement: HTMLElement = document.createElement('button');
     bookActionElement.classList.add('book__action');
     bookActionElement.textContent = 'Test';
     bookActionElement.addEventListener('click', () => {
-      this.actions.get('delete-book')?.(this.book.id);
+      this.actions.get(action)?.(this.book);
     });
     return bookActionElement;
   }

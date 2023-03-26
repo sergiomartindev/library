@@ -4,9 +4,15 @@ import BooksRepository from './repositories/BooksRepository.mjs';
 import SearchBarController from './controllers/SearchBarController.mjs';
 import Genre from './enums/Genre.mjs';
 
+// Global error handler
+window.onerror = function (message, source, line, column, error) {
+  console.error('An error occurred: ', message, source, line, column, error);
+};
+
 const booksRepository = new BooksRepository();
 const booksService = new BooksService(booksRepository);
 
+// Mocked books
 booksService.createBook('Moby Dick', 'Herman Nelville', [Genre.Fiction]);
 booksService.createBook(
   'Strange Case of Dr Jekyll and Mr Hyde',

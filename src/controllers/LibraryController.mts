@@ -4,10 +4,12 @@ import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
 import ElementLibrary from '../enums/ElementLibrary.mjs';
 import IController from '../interfaces/IController.mjs';
+import BookEvent from '../enums/BookEvent.mjs';
 
 class LibraryController implements IController {
-  public HTMLElements: Map<string, HTMLElement | null> = new Map();
-  private booksService: BooksService;
+  // Readonly so I prevent them from being accidentally modified after initialization
+  public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
+  private readonly booksService: BooksService;
 
   constructor(booksService: BooksService) {
     this.booksService = booksService;
@@ -24,32 +26,34 @@ class LibraryController implements IController {
   }
 
   public fillBooksGrid(books: IBook[]): void {
-    const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid) as
-      | HTMLElement
-      | undefined;
+    const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid);
 
-    if (bookGridElement) {
-      bookGridElement.innerHTML = '';
-      books.forEach((book) => {
-        const bookActions: Map<string, (...args: any[]) => {}> = new Map();
-        bookActions.set(
-          'delete-book',
-          function (bookId: string) {
-            this.booksService.deleteBook(bookId);
-            this.fillBooksGrid(this.booksService.readBooks());
-          }.bind(this)
-        );
-        // TODO: Mover a factory class
-        const bookComponent: IComponent = new Book(book, bookActions);
-        this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
-          bookComponent.getElement()
-        );
-      });
-    } else {
-      console.error(
+    if (!bookGridElement) {
+      throw new Error(
         `The element with ID '${ElementLibrary.BookGrid}' was not found in the DOM or is not an HTMLElement.`
       );
     }
+
+    bookGridElement.innerHTML = '';
+
+    for (const book of books) {
+      const bookActions: Map<BookEvent, (...args: any[]) => {}> = new Map();
+      bookActions.set(BookEvent.Delete, this.handleDeleteBook.bind(this));
+      bookActions.set(BookEvent.Borrow, this.handleBorrowBook.bind(this));
+      const bookComponent: IComponent = new Book(book, bookActions);
+      this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
+        bookComponent.getElement()
+      );
+    }
+  }
+
+  private handleDeleteBook(book: IBook) {
+    this.booksService.deleteBook(book.id);
+    this.fillBooksGrid(this.booksService.readBooks());
+  }
+
+  private handleBorrowBook(book: IBook) {
+    debugger;
   }
 }
 
