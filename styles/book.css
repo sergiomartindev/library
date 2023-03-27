@@ -1,6 +1,8 @@
 .book {
   display: flex;
+  flex: 0 0 200px;
   flex-direction: column;
+  justify-content: space-between;
   gap: var(--p-md);
   padding: var(--p-md);
   border: 1px solid var(--gray--light);
@@ -9,4 +11,17 @@
 
 .book__title {
   font-weight: bold;
+}
+
+.book__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.book__action {
+  border: none;
+  padding: 4px 10px;
+  font-weight: bold;
+  background: var(--main-color);
+  color: #fff;
 }

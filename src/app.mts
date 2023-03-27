@@ -6,10 +6,9 @@ import BorrowingRepository from './repositories/BorrowingsRepository.mjs';
 import SearchBarController from './controllers/SearchBarController.mjs';
 import Genre from './enums/Genre.mjs';
 
-// Global error handler
-window.onerror = function (message, source, line, column, error) {
-  console.error('An error occurred: ', message, source, line, column, error);
-};
+// window.onerror = function (message, source, line, column, error) {
+//   console.error('An error occurred: ', message, source, line, column, error);
+// };
 
 const booksRepository = new BooksRepository();
 const booksService = new BooksService(booksRepository);

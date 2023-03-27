@@ -1,12 +1,18 @@
 import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
 import BookEvent from '../enums/BookEvent.mjs';
+import BorrowingService from '../services/BorrowService.mjs';
+import BaseActionButton from '../abstracts/BaseActionButton.mjs';
+import BookActionButton from './BookActionButton.mjs';
 
 class Book implements IComponent {
-  private book: IBook;
-  private actions: Map<BookEvent, (...args: any[]) => {}>;
+  private readonly book: IBook;
+  private readonly actions: Map<BookEvent, IComponent & BaseActionButton>;
 
-  constructor(book: IBook, actions: Map<BookEvent, (...args: any[]) => {}>) {
+  constructor(
+    book: IBook,
+    actions: Map<BookEvent, IComponent & BaseActionButton>
+  ) {
     this.book = book;
     this.actions = actions;
   }
@@ -45,13 +51,12 @@ class Book implements IComponent {
   }
 
   private getActionElement(action: BookEvent): HTMLElement {
-    const bookActionElement: HTMLElement = document.createElement('button');
-    bookActionElement.classList.add('book__action');
-    bookActionElement.textContent = 'Test';
-    bookActionElement.addEventListener('click', () => {
-      this.actions.get(action)?.(this.book);
+    const bookActionElement = this.actions.get(action)?.getElement();
+    bookActionElement?.addEventListener('click', () => {
+      this.actions.get(action)?.action(this.book);
     });
-    return bookActionElement;
+
+    return bookActionElement ?? document.createElement('button');
   }
 }
 

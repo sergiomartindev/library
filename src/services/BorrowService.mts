@@ -13,8 +13,16 @@ class BorrowingService {
     return this.repository.create(bookId, userId);
   }
 
+  readBorrowings(): IBorrowing[] {
+    return this.repository.read();
+  }
+
   readBorrowingById(id: string): IBorrowing[] {
     return this.repository.read(({ id: borrowingId }) => borrowingId === id);
+  }
+
+  readBorowingByBookId(id: string): IBorrowing[] {
+    return this.repository.read(({ bookId }) => bookId === id);
   }
 
   updateBorrowing(id: string, status: BorrowingStatus): IBorrowing {

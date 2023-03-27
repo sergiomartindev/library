@@ -6,9 +6,11 @@ import IComponent from '../interfaces/IComponent.mjs';
 import ElementLibrary from '../enums/ElementLibrary.mjs';
 import IController from '../interfaces/IController.mjs';
 import BookEvent from '../enums/BookEvent.mjs';
+import BookActionButton from '../components/BookActionButton.mjs';
+import BaseActionButton from '../abstracts/BaseActionButton.mjs';
 
 class LibraryController implements IController {
-  // Readonly so I prevent them from being accidentally modified after initialization
+  // Setted as readonly so I prevent them from being accidentally modified after initialization
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
   private readonly booksService: BooksService;
   private readonly borrowingService: BorrowingService;
@@ -40,9 +42,16 @@ class LibraryController implements IController {
     bookGridElement.innerHTML = '';
 
     for (const book of books) {
-      const bookActions: Map<BookEvent, (...args: any[]) => {}> = new Map();
-      bookActions.set(BookEvent.Delete, this.handleDeleteBook.bind(this));
-      bookActions.set(BookEvent.Borrow, this.handleBorrowBook.bind(this));
+      const bookActions: Map<BookEvent, BaseActionButton & IComponent> =
+        new Map();
+      bookActions.set(
+        BookEvent.Delete,
+        new BookActionButton('Delete', this.handleDeleteBook.bind(this))
+      );
+      bookActions.set(
+        BookEvent.Borrow,
+        new BookActionButton('Borrow', this.handleBorrowBook.bind(this))
+      );
       const bookComponent: IComponent = new Book(book, bookActions);
       this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
         bookComponent.getElement()
@@ -56,8 +65,8 @@ class LibraryController implements IController {
   }
 
   private handleBorrowBook(book: IBook) {
-    const borrowing = this.borrowingService.createBorrowing(book.id, 'me');
-    debugger;
+    this.borrowingService.createBorrowing(book.id, 'me');
+    this.fillBooksGrid(this.booksService.readBooks());
   }
 }
 

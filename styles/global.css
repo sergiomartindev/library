@@ -3,3 +3,8 @@ body {
   padding: 0px;
   font-family: 'Cousine', monospace;
 }
+
+.btn:disabled {
+  user-select: none;
+  opacity: 0.5;
+}
