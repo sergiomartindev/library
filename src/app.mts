@@ -5,16 +5,23 @@ import BooksRepository from './repositories/BooksRepository.mjs';
 import BorrowingRepository from './repositories/BorrowingsRepository.mjs';
 import SearchBarController from './controllers/SearchBarController.mjs';
 import Genre from './enums/Genre.mjs';
+import UserService from './services/UserService.mjs';
+import UserRepository from './repositories/UserRepository.mjs';
 
 // window.onerror = function (message, source, line, column, error) {
 //   console.error('An error occurred: ', message, source, line, column, error);
 // };
 
+const userRepository = new UserRepository();
 const booksRepository = new BooksRepository();
-const booksService = new BooksService(booksRepository);
-
 const borrowingRepository = new BorrowingRepository();
-const borrowingService = new BorrowingService(borrowingRepository);
+
+const userService = new UserService(userRepository);
+
+userService.signUp('sergio', 'sergio@mail.com');
+userService.login('sergio@mail.com');
+
+const booksService = new BooksService(booksRepository);
 
 // Mocked books
 booksService.createBook('Moby Dick', 'Herman Nelville', [Genre.Fiction]);
@@ -24,7 +31,13 @@ booksService.createBook(
   [Genre.Fiction]
 );
 
-const libraryController = new LibraryController(booksService, borrowingService);
+const borrowingService = new BorrowingService(borrowingRepository);
+
+const libraryController = new LibraryController(
+  booksService,
+  borrowingService,
+  userService
+);
 const searchBarController = new SearchBarController(
   libraryController,
   booksService

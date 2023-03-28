@@ -20,10 +20,8 @@ class BorrowingRepository implements IRepository<IBorrowing> {
   }
 
   update(id: string, status: BorrowingStatus): IBorrowing {
-    const borrowingIndex = this.borrowings.findIndex(
-      ({ id: borrowingId }) => borrowingId === id
-    );
-    const borrowingToUpdate = BorrowingRepository[borrowingIndex];
+    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId }) => borrowingId === id);
+    const borrowingToUpdate = this.borrowings[borrowingIndex];
 
     if (status) {
       borrowingToUpdate.status = status;
@@ -33,9 +31,7 @@ class BorrowingRepository implements IRepository<IBorrowing> {
   }
 
   delete(id: string): IBorrowing[] {
-    const borrowingIndex = this.borrowings.findIndex(
-      ({ id: borrowingId }) => borrowingId === id
-    );
+    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId }) => borrowingId === id);
     this.borrowings.splice(borrowingIndex, 1);
     return this.borrowings;
   }

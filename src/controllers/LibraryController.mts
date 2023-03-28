@@ -8,16 +8,22 @@ import IController from '../interfaces/IController.mjs';
 import BookEvent from '../enums/BookEvent.mjs';
 import BookActionButton from '../components/BookActionButton.mjs';
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
+import UserService from '../services/UserService.mjs';
 
 class LibraryController implements IController {
-  // Setted as readonly so I prevent them from being accidentally modified after initialization
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
   private readonly booksService: BooksService;
   private readonly borrowingService: BorrowingService;
+  private readonly userService: UserService;
 
-  constructor(booksService: BooksService, borrowingService: BorrowingService) {
+  constructor(
+    booksService: BooksService,
+    borrowingService: BorrowingService,
+    userService: UserService
+  ) {
     this.booksService = booksService;
     this.borrowingService = borrowingService;
+    this.userService = userService;
     this.initializeHTMLElements();
     this.fillBooksGrid(this.booksService.readBooks());
   }
@@ -42,17 +48,10 @@ class LibraryController implements IController {
     bookGridElement.innerHTML = '';
 
     for (const book of books) {
-      const bookActions: Map<BookEvent, BaseActionButton & IComponent> =
-        new Map();
-      bookActions.set(
-        BookEvent.Delete,
-        new BookActionButton('Delete', this.handleDeleteBook.bind(this))
+      const bookComponent: IComponent = new Book(
+        book,
+        this.getBookAtions(book)
       );
-      bookActions.set(
-        BookEvent.Borrow,
-        new BookActionButton('Borrow', this.handleBorrowBook.bind(this))
-      );
-      const bookComponent: IComponent = new Book(book, bookActions);
       this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
         bookComponent.getElement()
       );
@@ -65,8 +64,38 @@ class LibraryController implements IController {
   }
 
   private handleBorrowBook(book: IBook) {
-    this.borrowingService.createBorrowing(book.id, 'me');
+    if (!this.userService.loggedUser) {
+      throw new Error('No user logged');
+    }
+
+    this.borrowingService.createBorrowing(
+      book.id,
+      this.userService.loggedUser.id
+    );
     this.fillBooksGrid(this.booksService.readBooks());
+  }
+
+  private getBookAtions(
+    book: IBook
+  ): Map<BookEvent, BaseActionButton & IComponent> {
+    const bookActions: Map<BookEvent, BaseActionButton & IComponent> =
+      new Map();
+    bookActions.set(
+      BookEvent.Delete,
+      new BookActionButton('Delete', this.handleDeleteBook.bind(this), false)
+    );
+    const borrowButtonIsDisabled: boolean = Boolean(
+      this.borrowingService.readBorowingByBookId(book.id).length
+    );
+    bookActions.set(
+      BookEvent.Borrow,
+      new BookActionButton(
+        'Borrow',
+        this.handleBorrowBook.bind(this),
+        borrowButtonIsDisabled
+      )
+    );
+    return bookActions;
   }
 }
 

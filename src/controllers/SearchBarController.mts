@@ -8,10 +8,7 @@ class SearchBarController implements IController {
   private libraryController: LibraryController;
   private booksService: BooksService;
 
-  constructor(
-    libraryController: LibraryController,
-    booksService: BooksService
-  ) {
+  constructor(libraryController: LibraryController, booksService: BooksService) {
     this.libraryController = libraryController;
     this.booksService = booksService;
     this.initializeHTMLElements();
@@ -19,10 +16,7 @@ class SearchBarController implements IController {
   }
 
   private initializeHTMLElements(): void {
-    const elementsIds: ElementSearchBar[] = [
-      ElementSearchBar.SearchForm,
-      ElementSearchBar.SearchTitleInput,
-    ];
+    const elementsIds: ElementSearchBar[] = [ElementSearchBar.SearchForm, ElementSearchBar.SearchTitleInput];
 
     elementsIds.forEach((elementId: ElementSearchBar) => {
       this.HTMLElements.set(elementId, document.getElementById(elementId));
@@ -34,10 +28,7 @@ class SearchBarController implements IController {
   }
 
   private initializeSearchFormEventListeners(): void {
-    this.HTMLElements.get(ElementSearchBar.SearchForm)?.addEventListener(
-      'submit',
-      (e) => e.preventDefault()
-    );
+    this.HTMLElements.get(ElementSearchBar.SearchForm)?.addEventListener('submit', (e) => e.preventDefault());
     this.HTMLElements.get(ElementSearchBar.SearchTitleInput)?.addEventListener(
       'input',
       this.handleSearchTitleInput.bind(this)
@@ -45,15 +36,10 @@ class SearchBarController implements IController {
   }
 
   private handleSearchTitleInput() {
-    const formElement: HTMLFormElement = this.HTMLElements.get(
-      ElementSearchBar.SearchForm
-    ) as HTMLFormElement;
+    const formElement: HTMLFormElement = this.HTMLElements.get(ElementSearchBar.SearchForm) as HTMLFormElement;
     const formData = new FormData(formElement);
-    const searchTitleInputValue =
-      formData.get(ElementSearchBar.SearchTitleInput) ?? '';
-    this.libraryController.fillBooksGrid(
-      this.booksService.readBooksByTitle(searchTitleInputValue as string)
-    );
+    const searchTitleInputValue = formData.get(ElementSearchBar.SearchTitleInput) ?? '';
+    this.libraryController.fillBooksGrid(this.booksService.readBooksByTitle(searchTitleInputValue as string));
   }
 }
 
