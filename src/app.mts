@@ -7,6 +7,7 @@ import SearchBarController from './controllers/SearchBarController.mjs';
 import Genre from './enums/Genre.mjs';
 import UserService from './services/UserService.mjs';
 import UserRepository from './repositories/UserRepository.mjs';
+import NavbarController from './controllers/NavbarController.mjs';
 
 // window.onerror = function (message, source, line, column, error) {
 //   console.error('An error occurred: ', message, source, line, column, error);
@@ -42,3 +43,4 @@ const searchBarController = new SearchBarController(
   libraryController,
   booksService
 );
+const navbarController = new NavbarController(borrowingService);
