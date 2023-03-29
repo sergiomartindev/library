@@ -24,7 +24,7 @@ class BooksService {
 
   readBooksByTitle(title: string): IBook[] {
     const filterFunction = ({ title: bookTitle }): boolean =>
-      bookTitle.includes(title);
+      bookTitle.toLowerCase().includes(title.toLowerCase());
     return this.repository.read(filterFunction);
   }
 
