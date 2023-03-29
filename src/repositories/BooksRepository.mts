@@ -6,8 +6,6 @@ import IRepository from '../interfaces/IRepository.mjs';
 class BooksRepository implements IRepository<IBook> {
   private books: IBook[] = [];
 
-  constructor() {}
-
   public create(title: string, author: string, genres: Genre[]): IBook {
     const newBook: IBook = BookFactory.create(title, author, genres);
     this.books.push(newBook);

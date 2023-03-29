@@ -6,21 +6,23 @@ import IRepository from '../interfaces/IRepository.mjs';
 class BorrowingRepository implements IRepository<IBorrowing> {
   private borrowings: IBorrowing[] = [];
 
-  create(bookId: string, userId: string): IBorrowing {
+  public create(bookId: string, userId: string): IBorrowing {
     const newBorrowing: IBorrowing = BorrowingFactory.create(bookId, userId);
     this.borrowings.push(newBorrowing);
     return newBorrowing;
   }
 
-  read(filterFunction?: (borrowing: IBorrowing) => {}): IBorrowing[] {
+  public read(filterFunction?: (borrowing: IBorrowing) => {}): IBorrowing[] {
     if (filterFunction) {
       return this.borrowings.filter(filterFunction);
     }
     return this.borrowings;
   }
 
-  update(id: string, status: BorrowingStatus): IBorrowing {
-    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId }) => borrowingId === id);
+  public update(id: string, status: BorrowingStatus): IBorrowing {
+    const borrowingIndex = this.borrowings.findIndex(
+      ({ id: borrowingId }) => borrowingId === id
+    );
     const borrowingToUpdate = this.borrowings[borrowingIndex];
 
     if (status) {
@@ -30,8 +32,10 @@ class BorrowingRepository implements IRepository<IBorrowing> {
     return borrowingToUpdate;
   }
 
-  delete(id: string): IBorrowing[] {
-    const borrowingIndex = this.borrowings.findIndex(({ id: borrowingId }) => borrowingId === id);
+  public delete(id: string): IBorrowing[] {
+    const borrowingIndex = this.borrowings.findIndex(
+      ({ id: borrowingId }) => borrowingId === id
+    );
     this.borrowings.splice(borrowingIndex, 1);
     return this.borrowings;
   }
