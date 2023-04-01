@@ -2,7 +2,7 @@ import BaseUser from '../abstracts/BaseUser.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
 import IFactory from '../interfaces/IFactory.mjs';
 
-class UserRepository implements IRepository<BaseUser> {
+class UsersRepository implements IRepository<BaseUser> {
   private readonly users: BaseUser[] = [];
   private readonly usersFactory: IFactory<BaseUser>;
 
@@ -45,4 +45,4 @@ class UserRepository implements IRepository<BaseUser> {
   }
 }
 
-export default UserRepository;
+export default UsersRepository;

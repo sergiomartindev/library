@@ -1,11 +1,9 @@
 import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
 import BookEvent from '../enums/BookEvent.mjs';
-import BorrowingService from '../services/BorrowService.mjs';
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
-import BookActionButton from './BookActionButton.mjs';
 
-class Book implements IComponent {
+class BookComponent implements IComponent {
   private readonly book: IBook;
   private readonly actions: Map<BookEvent, IComponent & BaseActionButton>;
 
@@ -60,4 +58,4 @@ class Book implements IComponent {
   }
 }
 
-export default Book;
+export default BookComponent;

@@ -1,8 +1,12 @@
 import IComponent from '../interfaces/IComponent.mjs';
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
 
-class BookActionButton extends BaseActionButton implements IComponent {
-  constructor(label: string, action: (...args: any[]) => {}, isDisabled: boolean) {
+class BookActionButtonComponent extends BaseActionButton implements IComponent {
+  constructor(
+    label: string,
+    action: (...args: any[]) => {},
+    isDisabled: boolean
+  ) {
     super(label, action, isDisabled);
   }
 
@@ -15,4 +19,4 @@ class BookActionButton extends BaseActionButton implements IComponent {
   }
 }
 
-export default BookActionButton;
+export default BookActionButtonComponent;

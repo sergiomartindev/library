@@ -1,29 +1,30 @@
 import BorrowingRepository from './repositories/BorrowingsRepository.mjs';
 import BooksRepository from './repositories/BooksRepository.mjs';
-import UserRepository from './repositories/UserRepository.mjs';
+import UsersRepository from './repositories/UsersRepository.mjs';
 import BorrowingService from './services/BorrowService.mjs';
 import BooksService from './services/BookService.mjs';
-import UserService from './services/UserService.mjs';
+import AuthenticationService from './services/AuthenticationService.mjs';
 import SearchBarController from './controllers/SearchBarController.mjs';
 import LibraryController from './controllers/LibraryController.mjs';
 import NavbarController from './controllers/NavbarController.mjs';
 import Genre from './enums/Genre.mjs';
-import BookFactory from './factories/BookFactory.mjs';
-import BorrowingFactory from './factories/BorrowingFactory.mjs';
-import UserFactory from './factories/UserFactory.mjs';
+import BooksFactory from './factories/BooksFactory.mjs';
+import BorrowingsFactory from './factories/BorrowingsFactory.mjs';
+import UsersFactory from './factories/UsersFactory.mjs';
 
-const booksFactory = new BookFactory();
-const borrowingsFactory = new BorrowingFactory();
-const usersFactory = new UserFactory();
+const booksFactory = new BooksFactory();
+const borrowingsFactory = new BorrowingsFactory();
+const usersFactory = new UsersFactory();
 
-const userRepository = new UserRepository(usersFactory);
+const usersRepository = new UsersRepository(usersFactory);
 const booksRepository = new BooksRepository(booksFactory);
 const borrowingRepository = new BorrowingRepository(borrowingsFactory);
 
-const userService = new UserService(userRepository);
+const authenticationService = new AuthenticationService(usersRepository);
 
-userService.signUp('sergio', 'sergio@mail.com');
-userService.login('sergio@mail.com');
+// Mocked user
+authenticationService.signUp('sergio', 'sergio@mail.com');
+authenticationService.login('sergio@mail.com');
 
 const booksService = new BooksService(booksRepository);
 // Mocked books
@@ -37,7 +38,7 @@ const borrowingService = new BorrowingService(borrowingRepository);
 const libraryController = new LibraryController(
   booksService,
   borrowingService,
-  userService
+  authenticationService
 );
 
 const searchBarController = new SearchBarController(

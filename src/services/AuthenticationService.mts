@@ -1,7 +1,7 @@
 import BaseUser from '../abstracts/BaseUser.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
 
-class UserService {
+class AuthenticationService {
   private _loggedUser: BaseUser | undefined;
   private readonly repository: IRepository<BaseUser>;
 
@@ -34,4 +34,4 @@ class UserService {
   }
 }
 
-export default UserService;
+export default AuthenticationService;
