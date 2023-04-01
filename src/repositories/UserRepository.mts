@@ -1,12 +1,17 @@
 import BaseUser from '../abstracts/BaseUser.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
-import UserFactory from '../factories/UserFactory.mjs';
+import IFactory from '../interfaces/IFactory.mjs';
 
 class UserRepository implements IRepository<BaseUser> {
   private readonly users: BaseUser[] = [];
+  private readonly usersFactory: IFactory<BaseUser>;
+
+  constructor(usersFactory: IFactory<BaseUser>) {
+    this.usersFactory = usersFactory;
+  }
 
   public create(name: string, email: string): BaseUser {
-    const newUser = UserFactory.create(name, email);
+    const newUser = this.usersFactory.create(name, email);
     this.users.push(newUser);
     return newUser;
   }

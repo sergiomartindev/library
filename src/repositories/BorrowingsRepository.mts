@@ -1,13 +1,21 @@
 import IBorrowing from '../interfaces/IBorrowing.mjs';
-import BorrowingFactory from '../factories/BorrowingFactory.mjs';
 import BorrowingStatus from '../enums/BorrowingStatus.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
+import IFactory from '../interfaces/IFactory.mjs';
 
 class BorrowingRepository implements IRepository<IBorrowing> {
   private borrowings: IBorrowing[] = [];
+  private borrowingsFactory: IFactory<IBorrowing>;
+
+  constructor(borrowingsFactory: IFactory<IBorrowing>) {
+    this.borrowingsFactory = borrowingsFactory;
+  }
 
   public create(bookId: string, userId: string): IBorrowing {
-    const newBorrowing: IBorrowing = BorrowingFactory.create(bookId, userId);
+    const newBorrowing: IBorrowing = this.borrowingsFactory.create(
+      bookId,
+      userId
+    );
     this.borrowings.push(newBorrowing);
     return newBorrowing;
   }

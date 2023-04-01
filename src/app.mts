@@ -8,14 +8,17 @@ import SearchBarController from './controllers/SearchBarController.mjs';
 import LibraryController from './controllers/LibraryController.mjs';
 import NavbarController from './controllers/NavbarController.mjs';
 import Genre from './enums/Genre.mjs';
+import BookFactory from './factories/BookFactory.mjs';
+import BorrowingFactory from './factories/BorrowingFactory.mjs';
+import UserFactory from './factories/UserFactory.mjs';
 
-// window.onerror = function (message, source, line, column, error) {
-//   console.error('An error occurred: ', message, source, line, column, error);
-// };
+const booksFactory = new BookFactory();
+const borrowingsFactory = new BorrowingFactory();
+const usersFactory = new UserFactory();
 
-const userRepository = new UserRepository();
-const booksRepository = new BooksRepository();
-const borrowingRepository = new BorrowingRepository();
+const userRepository = new UserRepository(usersFactory);
+const booksRepository = new BooksRepository(booksFactory);
+const borrowingRepository = new BorrowingRepository(borrowingsFactory);
 
 const userService = new UserService(userRepository);
 

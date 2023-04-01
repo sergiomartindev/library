@@ -1,13 +1,18 @@
 import IBook from '../interfaces/IBook.mjs';
-import BookFactory from '../factories/BookFactory.mjs';
 import Genre from '../enums/Genre.mjs';
 import IRepository from '../interfaces/IRepository.mjs';
+import IFactory from '../interfaces/IFactory.mjs';
 
 class BooksRepository implements IRepository<IBook> {
   private books: IBook[] = [];
+  private booksFactory: IFactory<IBook>;
+
+  constructor(booksFactory: IFactory<IBook>) {
+    this.booksFactory = booksFactory;
+  }
 
   public create(title: string, author: string, genres: Genre[]): IBook {
-    const newBook: IBook = BookFactory.create(title, author, genres);
+    const newBook: IBook = this.booksFactory.create(title, author, genres);
     this.books.push(newBook);
     return newBook;
   }
