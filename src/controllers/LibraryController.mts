@@ -11,24 +11,30 @@ import BaseActionButton from '../abstracts/BaseActionButton.mjs';
 import AuthenticationService from '../services/AuthenticationService.mjs';
 import GenresUtilities from '../utilities/GenresUtilities.mjs';
 import GenresFilterController from './GenresFilterController.mjs';
+import IObserver from '../interfaces/IObserver.mjs';
+import ISubject from '../interfaces/ISubject.mjs';
 
-class LibraryController implements IController {
+class LibraryController implements IController, IObserver {
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
   private readonly booksService: BooksService;
   private readonly borrowingService: BorrowingService;
   private readonly authenticationService: AuthenticationService;
   private readonly genresFilterController: GenresFilterController;
+  private readonly searchBarController: ISubject;
 
   constructor(
     booksService: BooksService,
     borrowingService: BorrowingService,
     authenticationService: AuthenticationService,
-    genresFilterController: GenresFilterController
+    genresFilterController: GenresFilterController,
+    searchBarController: ISubject
   ) {
     this.booksService = booksService;
     this.borrowingService = borrowingService;
     this.authenticationService = authenticationService;
     this.genresFilterController = genresFilterController;
+    this.searchBarController = searchBarController;
+    this.searchBarController.registerObserver(this);
     this.initializeHTMLElements();
     this.fillBooksGrid(this.booksService.readBooks());
   }
@@ -106,6 +112,12 @@ class LibraryController implements IController {
       )
     );
     return bookActions;
+  }
+
+  update(searchBarInputValue) {
+    const filteredBooks: IBook[] =
+      this.booksService.readBooksByTitle(searchBarInputValue);
+    this.fillBooksGrid(filteredBooks);
   }
 }
 

@@ -39,15 +39,13 @@ booksService.createBook(
 const genresFilterController = new GenresFilterController();
 
 const borrowingService = new BorrowingService(borrowingRepository);
+
+const searchBarController = new SearchBarController();
 const libraryController = new LibraryController(
   booksService,
   borrowingService,
   authenticationService,
-  genresFilterController
-);
-
-const searchBarController = new SearchBarController(
-  libraryController,
-  booksService
+  genresFilterController,
+  searchBarController
 );
 const navbarController = new NavbarController(borrowingService);
