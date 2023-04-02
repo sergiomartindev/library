@@ -11,6 +11,7 @@ import Genre from './enums/Genre.mjs';
 import BooksFactory from './factories/BooksFactory.mjs';
 import BorrowingsFactory from './factories/BorrowingsFactory.mjs';
 import UsersFactory from './factories/UsersFactory.mjs';
+import GenresFilterController from './controllers/GenresFilterController.mjs';
 
 const booksFactory = new BooksFactory();
 const borrowingsFactory = new BorrowingsFactory();
@@ -32,13 +33,17 @@ booksService.createBook('Moby Dick', 'Herman Nelville', [Genre.Fiction]);
 booksService.createBook(
   'Strange Case of Dr Jekyll and Mr Hyde',
   'Robert Louis Stevenson',
-  [Genre.Fiction]
+  [Genre.Fantasy]
 );
+
+const genresFilterController = new GenresFilterController();
+
 const borrowingService = new BorrowingService(borrowingRepository);
 const libraryController = new LibraryController(
   booksService,
   borrowingService,
-  authenticationService
+  authenticationService,
+  genresFilterController
 );
 
 const searchBarController = new SearchBarController(

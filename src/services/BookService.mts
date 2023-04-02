@@ -22,15 +22,22 @@ class BooksService {
     return this.repository.read(findFunction);
   }
 
-  readBooksByTitle(title: string): IBook[] {
-    const filterFunction = ({ title: bookTitle }): boolean =>
-      bookTitle.toLowerCase().includes(title.toLowerCase());
-    return this.repository.read(filterFunction);
-  }
-
   readBooksByGenre(genre: Genre): IBook[] {
     const filterFunction = ({ genres: bookGenres }): boolean =>
       bookGenres.some((bookGenre) => bookGenre === genre);
+    return this.repository.read(filterFunction);
+  }
+
+  readBooksByGenres(genres: Genre[]): IBook[] {
+    const filterFunction = ({ genres: bookGenres }): boolean =>
+      bookGenres.some((bookGenre) => genres.includes(bookGenre));
+
+    return this.repository.read(filterFunction);
+  }
+
+  readBooksByTitle(title: string): IBook[] {
+    const filterFunction = ({ title: bookTitle }): boolean =>
+      bookTitle.toLowerCase().includes(title.toLowerCase());
     return this.repository.read(filterFunction);
   }
 

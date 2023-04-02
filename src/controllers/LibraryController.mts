@@ -9,21 +9,26 @@ import BookEvent from '../enums/BookEvent.mjs';
 import BookActionButtonComponent from '../components/BookActionButtonComponent.mjs';
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
 import AuthenticationService from '../services/AuthenticationService.mjs';
+import GenresUtilities from '../utilities/GenresUtilities.mjs';
+import GenresFilterController from './GenresFilterController.mjs';
 
 class LibraryController implements IController {
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
   private readonly booksService: BooksService;
   private readonly borrowingService: BorrowingService;
   private readonly authenticationService: AuthenticationService;
+  private readonly genresFilterController: GenresFilterController;
 
   constructor(
     booksService: BooksService,
     borrowingService: BorrowingService,
-    authenticationService: AuthenticationService
+    authenticationService: AuthenticationService,
+    genresFilterController: GenresFilterController
   ) {
     this.booksService = booksService;
     this.borrowingService = borrowingService;
     this.authenticationService = authenticationService;
+    this.genresFilterController = genresFilterController;
     this.initializeHTMLElements();
     this.fillBooksGrid(this.booksService.readBooks());
   }
@@ -37,6 +42,9 @@ class LibraryController implements IController {
   }
 
   public fillBooksGrid(books: IBook[]): void {
+    this.genresFilterController.fillGenreList(
+      GenresUtilities.getGenresFromBooks(books)
+    );
     const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid);
 
     if (!bookGridElement) {
@@ -52,9 +60,7 @@ class LibraryController implements IController {
         book,
         this.getBookAtions(book)
       );
-      this.HTMLElements.get(ElementLibrary.BookGrid)?.appendChild(
-        bookComponent.getElement()
-      );
+      bookGridElement.appendChild(bookComponent.getElement());
     }
   }
 
