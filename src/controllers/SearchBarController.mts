@@ -1,14 +1,12 @@
 import IController from '../interfaces/IController.mjs';
-import LibraryController from './LibraryController.mjs';
 import ElementSearchBar from '../enums/ElementSearchBar.mjs';
-import BooksService from '../services/BookService.mjs';
 import ISubject from '../interfaces/ISubject.mjs';
 import IObserver from '../interfaces/IObserver.mjs';
-import IBook from '../interfaces/IBook.mjs';
 
 class SearchBarController implements IController, ISubject {
   private observers: IObserver[];
   private HTMLElements: Map<string, HTMLElement | null> = new Map();
+  private _searchBarInputValue: string;
 
   constructor() {
     this.observers = [];
@@ -24,10 +22,14 @@ class SearchBarController implements IController, ISubject {
     // TODO: TBD
   }
 
-  notifyObservers(inputValue: string): void {
+  notifyObservers(): void {
     for (const observer of this.observers) {
-      observer.update(inputValue);
+      observer.update(this);
     }
+  }
+
+  get searchBarInputValue(): string {
+    return this._searchBarInputValue;
   }
 
   private initializeHTMLElements(): void {
@@ -61,12 +63,9 @@ class SearchBarController implements IController, ISubject {
       ElementSearchBar.SearchForm
     ) as HTMLFormElement;
     const formData = new FormData(formElement);
-    const searchTitleInputValue =
-      formData.get(ElementSearchBar.SearchTitleInput) ?? '';
-    this.notifyObservers(searchTitleInputValue as string);
-    // this.libraryController.fillBooksGrid(
-    //   this.booksService.readBooksByTitle(searchTitleInputValue as string)
-    // );
+    this._searchBarInputValue =
+      (formData.get(ElementSearchBar.SearchTitleInput) as string) ?? '';
+    this.notifyObservers();
   }
 }
 

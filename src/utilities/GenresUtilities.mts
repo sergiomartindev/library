@@ -9,6 +9,17 @@ class GenresUtilities {
 
     return Array.from(genresSet);
   }
+
+  static getGenreLabel(genre: Genre): string {
+    const labelByGenre: Record<Genre, string> = {
+      [Genre.Fiction]: 'Fiction',
+      [Genre.Romance]: 'Romance',
+      [Genre.Historical]: 'Historical',
+      [Genre.Fantasy]: 'Fantasy',
+    };
+
+    return labelByGenre[genre] ?? '';
+  }
 }
 
 export default GenresUtilities;

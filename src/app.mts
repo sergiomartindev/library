@@ -35,11 +35,9 @@ booksService.createBook(
   'Robert Louis Stevenson',
   [Genre.Fantasy]
 );
-
-const genresFilterController = new GenresFilterController();
-
 const borrowingService = new BorrowingService(borrowingRepository);
 
+const genresFilterController = new GenresFilterController();
 const searchBarController = new SearchBarController();
 const libraryController = new LibraryController(
   booksService,

@@ -13,6 +13,7 @@ import GenresUtilities from '../utilities/GenresUtilities.mjs';
 import GenresFilterController from './GenresFilterController.mjs';
 import IObserver from '../interfaces/IObserver.mjs';
 import ISubject from '../interfaces/ISubject.mjs';
+import SearchBarController from './SearchBarController.mjs';
 
 class LibraryController implements IController, IObserver {
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
@@ -33,6 +34,7 @@ class LibraryController implements IController, IObserver {
     this.borrowingService = borrowingService;
     this.authenticationService = authenticationService;
     this.genresFilterController = genresFilterController;
+    this.genresFilterController.registerObserver(this);
     this.searchBarController = searchBarController;
     this.searchBarController.registerObserver(this);
     this.initializeHTMLElements();
@@ -114,9 +116,20 @@ class LibraryController implements IController, IObserver {
     return bookActions;
   }
 
-  update(searchBarInputValue) {
-    const filteredBooks: IBook[] =
-      this.booksService.readBooksByTitle(searchBarInputValue);
+  update(subject: ISubject) {
+    if (subject instanceof SearchBarController) {
+      this.handleSearchBarControllerUpdate();
+    }
+
+    if (subject instanceof GenresFilterController) {
+      console.log('Click');
+    }
+  }
+
+  handleSearchBarControllerUpdate() {
+    const filteredBooks: IBook[] = this.booksService.readBooksByTitle(
+      this.searchBarController.searchBarInputValue
+    );
     this.fillBooksGrid(filteredBooks);
   }
 }
