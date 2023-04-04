@@ -13,6 +13,17 @@
   font-weight: bold;
 }
 
+.book__genres {
+  display: flex;
+  gap: 4px;
+}
+
+.book__genre {
+  padding: 4px;
+  background: var(--gray--light);
+  border-radius: 5px;
+}
+
 .book__actions {
   display: flex;
   gap: 4px;

@@ -2,6 +2,7 @@ import IBook from '../interfaces/IBook.mjs';
 import IComponent from '../interfaces/IComponent.mjs';
 import BookEvent from '../enums/BookEvent.mjs';
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
+import GenresUtilities from '../utilities/GenresUtilities.mjs';
 
 class BookComponent implements IComponent {
   private readonly book: IBook;
@@ -20,6 +21,7 @@ class BookComponent implements IComponent {
     bookElement.classList.add('book');
     bookElement.appendChild(this.getTitleElement());
     bookElement.appendChild(this.getAuthorElement());
+    bookElement.appendChild(this.getGenresElement());
     bookElement.appendChild(this.getActionsElement());
 
     return bookElement;
@@ -46,6 +48,18 @@ class BookComponent implements IComponent {
       bookActionsElement.appendChild(this.getActionElement(action));
     }
     return bookActionsElement;
+  }
+
+  private getGenresElement(): HTMLElement {
+    const bookGenresElement: HTMLElement = document.createElement('div');
+    bookGenresElement.classList.add('book__genres');
+    for (const genre of this.book.genres) {
+      const bookGenreElement: HTMLElement = document.createElement('div');
+      bookGenreElement.classList.add('book__genre');
+      bookGenreElement.textContent = GenresUtilities.getGenreLabel(genre);
+      bookGenresElement.appendChild(bookGenreElement);
+    }
+    return bookGenresElement;
   }
 
   private getActionElement(action: BookEvent): HTMLElement {

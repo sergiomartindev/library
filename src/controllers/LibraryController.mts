@@ -10,7 +10,6 @@ import BookActionButtonComponent from '../components/BookActionButtonComponent.m
 import BaseActionButton from '../abstracts/BaseActionButton.mjs';
 import AuthenticationService from '../services/AuthenticationService.mjs';
 import GenresUtilities from '../utilities/GenresUtilities.mjs';
-import GenresFilterController from './GenresFilterController.mjs';
 import IObserver from '../interfaces/IObserver.mjs';
 import ISubject from '../interfaces/ISubject.mjs';
 import SearchBarController from './SearchBarController.mjs';
@@ -20,21 +19,17 @@ class LibraryController implements IController, IObserver {
   private readonly booksService: BooksService;
   private readonly borrowingService: BorrowingService;
   private readonly authenticationService: AuthenticationService;
-  private readonly genresFilterController: GenresFilterController;
   private readonly searchBarController: ISubject;
 
   constructor(
     booksService: BooksService,
     borrowingService: BorrowingService,
     authenticationService: AuthenticationService,
-    genresFilterController: GenresFilterController,
     searchBarController: ISubject
   ) {
     this.booksService = booksService;
     this.borrowingService = borrowingService;
     this.authenticationService = authenticationService;
-    this.genresFilterController = genresFilterController;
-    this.genresFilterController.registerObserver(this);
     this.searchBarController = searchBarController;
     this.searchBarController.registerObserver(this);
     this.initializeHTMLElements();
@@ -44,9 +39,6 @@ class LibraryController implements IController, IObserver {
   update(subject: ISubject) {
     if (subject instanceof SearchBarController) {
       this.handleSearchBarControllerUpdate();
-    }
-
-    if (subject instanceof GenresFilterController) {
     }
   }
 
@@ -59,10 +51,6 @@ class LibraryController implements IController, IObserver {
   }
 
   private fillBooksGrid(books: IBook[]): void {
-    this.genresFilterController.fillGenreList(
-      GenresUtilities.getGenresFromBooks(books)
-    );
-
     const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid);
 
     if (!bookGridElement) {

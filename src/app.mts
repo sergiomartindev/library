@@ -11,7 +11,6 @@ import Genre from './enums/Genre.mjs';
 import BooksFactory from './factories/BooksFactory.mjs';
 import BorrowingsFactory from './factories/BorrowingsFactory.mjs';
 import UsersFactory from './factories/UsersFactory.mjs';
-import GenresFilterController from './controllers/GenresFilterController.mjs';
 
 const booksFactory = new BooksFactory();
 const borrowingsFactory = new BorrowingsFactory();
@@ -37,13 +36,11 @@ booksService.createBook(
 );
 const borrowingService = new BorrowingService(borrowingRepository);
 
-const genresFilterController = new GenresFilterController();
 const searchBarController = new SearchBarController();
 const libraryController = new LibraryController(
   booksService,
   borrowingService,
   authenticationService,
-  genresFilterController,
   searchBarController
 );
 const navbarController = new NavbarController(borrowingService);
