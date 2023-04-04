@@ -28,7 +28,7 @@ class SearchBarController implements IController, ISubject {
     }
   }
 
-  get searchBarInputValue(): string {
+  public get searchBarInputValue(): string {
     return this._searchBarInputValue;
   }
 

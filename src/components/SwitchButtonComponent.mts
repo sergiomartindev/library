@@ -10,7 +10,7 @@ class SwitchButtonComponent implements IComponent {
   }
 
   public getElement(): HTMLElement {
-    const element: HTMLElement = document.createElement('div');
+    const element: HTMLElement = document.createElement('button');
     element.classList.add('genre-filters__filter');
     element.textContent = this.label;
 

@@ -41,6 +41,15 @@ class LibraryController implements IController, IObserver {
     this.fillBooksGrid(this.booksService.readBooks());
   }
 
+  update(subject: ISubject) {
+    if (subject instanceof SearchBarController) {
+      this.handleSearchBarControllerUpdate();
+    }
+
+    if (subject instanceof GenresFilterController) {
+    }
+  }
+
   public initializeHTMLElements(): void {
     const elementsIds: ElementLibrary[] = [ElementLibrary.BookGrid];
 
@@ -49,10 +58,11 @@ class LibraryController implements IController, IObserver {
     });
   }
 
-  public fillBooksGrid(books: IBook[]): void {
+  private fillBooksGrid(books: IBook[]): void {
     this.genresFilterController.fillGenreList(
       GenresUtilities.getGenresFromBooks(books)
     );
+
     const bookGridElement = this.HTMLElements.get(ElementLibrary.BookGrid);
 
     if (!bookGridElement) {
@@ -70,23 +80,6 @@ class LibraryController implements IController, IObserver {
       );
       bookGridElement.appendChild(bookComponent.getElement());
     }
-  }
-
-  private handleDeleteBook(book: IBook) {
-    this.booksService.deleteBook(book.id);
-    this.fillBooksGrid(this.booksService.readBooks());
-  }
-
-  private handleBorrowBook(book: IBook) {
-    if (!this.authenticationService.loggedUser) {
-      throw new Error('No user logged');
-    }
-
-    this.borrowingService.createBorrowing(
-      book.id,
-      this.authenticationService.loggedUser.id
-    );
-    this.fillBooksGrid(this.booksService.readBooks());
   }
 
   private getBookAtions(
@@ -116,21 +109,30 @@ class LibraryController implements IController, IObserver {
     return bookActions;
   }
 
-  update(subject: ISubject) {
-    if (subject instanceof SearchBarController) {
-      this.handleSearchBarControllerUpdate();
-    }
-
-    if (subject instanceof GenresFilterController) {
-      console.log('Click');
-    }
+  private handleSearchBarControllerUpdate() {
+    const searchBarInputValue = (
+      this.searchBarController as SearchBarController
+    ).searchBarInputValue;
+    const filteredBooks: IBook[] =
+      this.booksService.readBooksByTitle(searchBarInputValue);
+    this.fillBooksGrid(filteredBooks);
   }
 
-  handleSearchBarControllerUpdate() {
-    const filteredBooks: IBook[] = this.booksService.readBooksByTitle(
-      this.searchBarController.searchBarInputValue
+  private handleDeleteBook(book: IBook) {
+    this.booksService.deleteBook(book.id);
+    this.fillBooksGrid(this.booksService.readBooks());
+  }
+
+  private handleBorrowBook(book: IBook) {
+    if (!this.authenticationService.loggedUser) {
+      throw new Error('No user logged');
+    }
+
+    this.borrowingService.createBorrowing(
+      book.id,
+      this.authenticationService.loggedUser.id
     );
-    this.fillBooksGrid(filteredBooks);
+    this.fillBooksGrid(this.booksService.readBooks());
   }
 }
 

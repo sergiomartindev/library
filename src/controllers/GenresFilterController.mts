@@ -9,9 +9,11 @@ import GenresUtilities from '../utilities/GenresUtilities.mjs';
 class GenresFilterController implements IController, ISubject {
   private observers: IObserver[];
   public readonly HTMLElements: Map<string, HTMLElement | null> = new Map();
+  private switchButtonComponentElements: HTMLElement[];
 
   constructor() {
     this.observers = [];
+    this.switchButtonComponentElements = [];
     this.initializeHTMLElements();
   }
 
@@ -29,7 +31,7 @@ class GenresFilterController implements IController, ISubject {
     }
   }
 
-  public initializeHTMLElements(): void {
+  private initializeHTMLElements(): void {
     const elementsIds: ElementGenresFilter[] = [ElementGenresFilter.GenreList];
 
     elementsIds.forEach((elementId: ElementGenresFilter) => {
@@ -49,16 +51,27 @@ class GenresFilterController implements IController, ISubject {
     }
 
     genreListElement.innerHTML = '';
+    const notifyObserversMethod = this.notifyObservers.bind(this);
+
+    for (const switchButtonComponentElement of this
+      .switchButtonComponentElements) {
+      switchButtonComponentElement.removeEventListener(
+        'click',
+        notifyObserversMethod
+      );
+    }
 
     for (const genre of genres) {
       const switchButtonComponent = new SwitchButtonComponent(
         GenresUtilities.getGenreLabel(genre),
         true
       );
-      genreListElement.appendChild(switchButtonComponent.getElement());
-      genreListElement.addEventListener(
+      const switchButtonComponentElement = switchButtonComponent.getElement();
+      this.switchButtonComponentElements.push(switchButtonComponentElement);
+      genreListElement.appendChild(switchButtonComponentElement);
+      switchButtonComponentElement.addEventListener(
         'click',
-        this.notifyObservers.bind(this)
+        notifyObserversMethod
       );
     }
   }

@@ -18,4 +18,5 @@
   font-weight: bold;
   background: var(--main-color);
   color: #fff;
+  border-radius: 5px;
 }
